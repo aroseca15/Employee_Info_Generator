@@ -119,6 +119,12 @@ function addNewEmployee() {
 
 function render(){
     const confirm = res.confirm;
+    if(confirm == true){
+        generalQuestions();
+        addNewEmployee();
+    } else if(confirm == false){
+        console.log("Finished!")
+    }
 }
 
 
