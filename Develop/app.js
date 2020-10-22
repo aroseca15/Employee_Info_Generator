@@ -4,20 +4,16 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
-const util = require('util');
-
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-const { type } = require("os");
+// const { type } = require("os");
 
 const newEmployee = [];
 
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
-
+// Function that starts and directs the process:
 function starter() {
     inquirer.prompt([
         {
@@ -37,6 +33,7 @@ function starter() {
 }
 starter();
 
+// Functions that control questions being asked and pushes information to needed areas.
 function manager() {
     inquirer.prompt([
         {
@@ -99,7 +96,7 @@ function intern() {
         }
     ]).then(function (response) {
         const intern = new Intern(response.name, response.id,  response.email, response.school);
-        
+
         newEmployee.push(intern);
         console.log(newEmployee);
         starter();
@@ -141,6 +138,7 @@ function engineer() {
     });
 }
 
+// Finishes and writes to generated html:
 function finished(){
     fs.writeFileSync(outputPath, render(newEmployee), "utf-8")
 }
