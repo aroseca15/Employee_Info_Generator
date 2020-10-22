@@ -66,7 +66,7 @@ const app = () => {
                     console.log("Finished!")
                 }
             };
-            render();
+            
         })
     }
     function getManager() {
@@ -129,6 +129,8 @@ const app = () => {
 
 
 app();
+render();
+generalQuestions();
 
 
 
