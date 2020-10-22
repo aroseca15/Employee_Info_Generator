@@ -10,6 +10,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const { type } = require("os");
 
 const newEmployee = [];
 
@@ -18,114 +19,138 @@ const newEmployee = [];
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-const app = function app(){
-    function generalQuestions() {
-        inquirer.prompt([
-            {
-                type: 'input',
-                message: 'What is the name of the new employee?',
-                name: 'name'
+const app = function app() {
+    // function generalQuestions() {
+    inquirer.prompt([
+        {
+            type: 'input',
+            message: 'What is the name of the new employee?',
+            name: 'name'
+        },
+
+        {
+            type: 'confirm',
+            message: 'Is your new employee a Manager?',
+            name: 'manager',
+            when: function (answers) {
+                answers.manager === true
+                return answers.officeNum;
+            }
+        },
+
+        {
+            type: 'confirm',
+            message: 'Is your new employee an Intern?',
+            name: 'intern',
+            default: {
+                type: "input",
+                message: "What school:",
+                name: 'school'
             },
+            when: function (answers) {
+                answers.intern === true
+                return answers.school;
+            }
+        },
 
-            {
-                type: 'list',
-                message: 'Please choose their role in your company:',
-                choices: ["Manager", "Engineer", "Intern"],
-                name: 'role',
-            },
+        {
+            type: 'confirm',
+            message: 'Is your new employee a Engineer?',
+            name: 'engineer',
+            when: function (answers) {
+                answers.engineer === true
+                return answers.userName;
+            }
+        },
 
-            {
-                type: 'input',
-                message: 'Please enter the email of new employee:',
-                name: 'email'
-
-            },
-
-            {
-                type: 'input',
-                message: 'Please enter new employee ID:',
-                name: 'id'
-
-            },
-
-            {
-                type: 'confirm',
-                message: 'Would you like to add a new Employee?',
-                name: 'confirm'
-
-            },
+        // {
+        //     type: 'input',
+        //     message: 'Please enter the School of your Intern:',
+        //     name: 'school'
+        // },
 
 
+        {
+            type: 'input',
+            message: 'Please enter the email of new employee:',
+            name: 'email'
 
-        ]).then(res => {
-            function confirm(){
-                const confirm = res.confirm;
-                if(confirm == true){
-                    addNewEmployee();
-                } else if(confirm == false){
-                    console.log("Finished!");
-                    renderHTML();
-                }
-            };
-            confirm();
-        })
-    }
-    function getManager() {
-        inquirer.prompt([
-            {
-                type: 'input',
-                message: 'What office number is assigned to your Manager?',
-                name: 'officeNumber'
-            },
-        ]).then(res => {
-            const manager = new Manager(res.name, res.role, res.id, res.email, res.officeNum);
-            newEmployee.push(manager);
-            addNewEmployee();
-        })
-    };
-    
-    function getEngineer() {
-        inquirer.prompt([
-            {
-                type: 'input',
-                message: 'Please enter Engineer Github username',
-                name: 'userName'
-            },
-        ]).then(res => {
-            const engineer = new Engineer(res.name, res.role, res.id, res.email, res.github);
-            newEmployee.push(engineer);
-            addNewEmployee();
-        })
-    };
-    
-    function getIntern() {
-        inquirer.prompt([
-            {
-                type: 'input',
-                message: 'Please enter Engineer Github username',
-                name: 'userName'
-            },
-        ]).then(res => {
-            const intern = new Intern(res.name, res.role, res.email, res.id, res.school);
-            newEmployee.push(intern);
-            addNewEmployee();
-        })
-    };
-    
-    function addNewEmployee() {
-        generalQuestions();
-        const role = res.role;
-        if (role == "intern") {
-            getIntern();
-        } else if (role == "manager"){
-            getManager();
-        } else if (role == "engineer"){
-            getEngineer();
-        } 
-    };
+        },
 
+        {
+            type: 'input',
+            message: 'Please enter new employee ID:',
+            name: 'id'
+
+        },
+
+        
+        {
+            type: 'input',
+            message: 'What office number is assigned to your Manager?',
+            name: 'officeNum'
+        },
+
+        {
+            type: 'input',
+            message: 'Please enter Engineer Github username',
+            name: 'userName'
+        },
+
+        
+        {
+            type: 'confirm',
+            message: 'Would you like to add a new Employee?',
+            name: 'confirm'
+
+        },
+
+
+    ]).then(res => {
+        function confirm() {
+            const confirm = res.confirm;
+            if (confirm == true) {
+                addNewEmployee();
+            } else if (confirm == false) {
+                console.log("Finished!");
+                renderHTML();
+            }
+        };
+        confirm();
+    })
+}
+function getManager() {
+        const manager = new Manager(res.name, res.role, res.id, res.email, res.officeNum);
+        newEmployee.push(manager);
+        addNewEmployee();
 };
-function renderHTML(){
+
+function getEngineer() {
+    const engineer = new Engineer(res.name, res.role, res.id, res.email, res.github);
+    newEmployee.push(engineer);
+    addNewEmployee();
+};
+
+function getIntern() {
+        const intern = new Intern(res.name, res.role, res.email, res.id, res.school);
+        newEmployee.push(intern);
+        addNewEmployee();
+};
+
+function addNewEmployee() {
+    // generalQuestions();
+    const role = res.role;
+    if (role == "intern") {
+        getIntern();
+    } else if (role == "manager") {
+        getManager();
+    } else if (role == "engineer") {
+        getEngineer();
+    }
+};
+
+// };
+function renderHTML() {
     fs.writeFileSync(outputPath, render(newEmployee), "utf-8")
 }
 
