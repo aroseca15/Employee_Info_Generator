@@ -18,7 +18,7 @@ const newEmployee = [];
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-const app = () => {
+const app = function app(){
     function generalQuestions() {
         inquirer.prompt([
             {
@@ -66,7 +66,7 @@ const app = () => {
                     console.log("Finished!")
                 }
             };
-            
+            render();
         })
     }
     function getManager() {
@@ -129,8 +129,8 @@ const app = () => {
 
 
 app();
-render();
-generalQuestions();
+
+
 
 
 
