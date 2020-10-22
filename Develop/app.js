@@ -18,7 +18,7 @@ const newEmployee = [];
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-app = () => {
+const app = () => {
     function generalQuestions() {
         inquirer.prompt([
             {
@@ -61,71 +61,71 @@ app = () => {
             console.log(res);
         })
     }
-};
-
-function getManager() {
-    inquirer.prompt([
-        {
-            type: 'input',
-            message: 'What office number is assigned to your Manager?',
-            name: 'officeNumber'
-        },
-    ]).then(res => {
-        const manager = new Manager(res.name, res.role, res.id, res.email, res.officeNum);
-        newEmployee.push(manager);
-        addNewEmployee();
-    })
-};
-
-function getEngineer() {
-    inquirer.prompt([
-        {
-            type: 'input',
-            message: 'Please enter Engineer Github username',
-            name: 'userName'
-        },
-    ]).then(res => {
-        const engineer = new Engineer(res.name, res.role, res.id, res.email, res.github);
-        newEmployee.push(engineer);
-        addNewEmployee();
-    })
-};
-
-function getIntern() {
-    inquirer.prompt([
-        {
-            type: 'input',
-            message: 'Please enter Engineer Github username',
-            name: 'userName'
-        },
-    ]).then(res => {
-        const intern = new Intern(res.name, res.role, res.email, res.id, res.school);
-        newEmployee.push(intern);
-        addNewEmployee();
-    })
-};
-
-function addNewEmployee() {
-    generalQuestions = generalQuestions();
-    const role = res.role;
-    if (role == "intern") {
-        getIntern();
-    } else if (role == "manager"){
-        getManager();
-    } else if (role == "engineer"){
-        getEngineer();
-    } 
-};
-
-function render(){
-    const confirm = res.confirm;
-    if(confirm == true){
+    function getManager() {
+        inquirer.prompt([
+            {
+                type: 'input',
+                message: 'What office number is assigned to your Manager?',
+                name: 'officeNumber'
+            },
+        ]).then(res => {
+            const manager = new Manager(res.name, res.role, res.id, res.email, res.officeNum);
+            newEmployee.push(manager);
+            addNewEmployee();
+        })
+    };
+    
+    function getEngineer() {
+        inquirer.prompt([
+            {
+                type: 'input',
+                message: 'Please enter Engineer Github username',
+                name: 'userName'
+            },
+        ]).then(res => {
+            const engineer = new Engineer(res.name, res.role, res.id, res.email, res.github);
+            newEmployee.push(engineer);
+            addNewEmployee();
+        })
+    };
+    
+    function getIntern() {
+        inquirer.prompt([
+            {
+                type: 'input',
+                message: 'Please enter Engineer Github username',
+                name: 'userName'
+            },
+        ]).then(res => {
+            const intern = new Intern(res.name, res.role, res.email, res.id, res.school);
+            newEmployee.push(intern);
+            addNewEmployee();
+        })
+    };
+    
+    function addNewEmployee() {
         generalQuestions();
-        addNewEmployee();
-    } else if(confirm == false){
-        console.log("Finished!")
-    }
-}
+        const role = res.role;
+        if (role == "intern") {
+            getIntern();
+        } else if (role == "manager"){
+            getManager();
+        } else if (role == "engineer"){
+            getEngineer();
+        } 
+    };
+    
+    function render(){
+        const confirm = res.confirm;
+        if(confirm == true){
+            addNewEmployee();
+        } else if(confirm == false){
+            console.log("Finished!")
+        }
+    };
+    render();
+    
+};
 
 
 app();
