@@ -1,27 +1,19 @@
 // TODO: Write code to define and export the Employee class
 class Employee {
-    constructor(name, role, email, id, hireDate) {
+    constructor(name, email, id) {
         this.name = name,
-            this.role = role,
-            this.email = email,
-            this.id = id,
-            this.hireDate = hireDate
-    }
+        // this.role = role,
+        this.email = email,
+        this.id = id
+    };
 
-    // getEmployeeInfo = () => {
-    //     return [this.name,
-    //     this.role,
-    //     this.email,
-    //     this.id,
-    //     this.hireDate];
-    // }
 
     getName = () => {
         return this.name;
     }
 
     getRole = () => {
-        return this.role;
+        return "Employee";
     }
 
     getEmail = () => {
@@ -32,9 +24,10 @@ class Employee {
         return this.id;
     }
 
-    getHireDate = () => {
-        return this.hireDate;
-    }
+    // Originally had this, but deleted all accept this. I would like to add this later.
+    // getHireDate = () => {
+    //     return this.hireDate;
+    // }
 
 }
 
