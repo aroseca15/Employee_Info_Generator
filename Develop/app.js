@@ -58,7 +58,15 @@ const app = () => {
 
 
         ]).then(res => {
-            console.log(res);
+            function render(){
+                const confirm = res.confirm;
+                if(confirm == true){
+                    addNewEmployee();
+                } else if(confirm == false){
+                    console.log("Finished!")
+                }
+            };
+            render();
         })
     }
     function getManager() {
@@ -115,15 +123,7 @@ const app = () => {
         } 
     };
     
-    function render(){
-        const confirm = res.confirm;
-        if(confirm == true){
-            addNewEmployee();
-        } else if(confirm == false){
-            console.log("Finished!")
-        }
-    };
-    render();
+    
     
 };
 
