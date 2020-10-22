@@ -4,7 +4,7 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
-const http = require('http');
+
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
@@ -58,15 +58,16 @@ const app = function app(){
 
 
         ]).then(res => {
-            function render(){
+            function confirm(){
                 const confirm = res.confirm;
                 if(confirm == true){
                     addNewEmployee();
                 } else if(confirm == false){
-                    console.log("Finished!")
+                    console.log("Finished!");
+                    renderHTML();
                 }
             };
-            render();
+            confirm();
         })
     }
     function getManager() {
@@ -122,10 +123,11 @@ const app = function app(){
             getEngineer();
         } 
     };
-    
-    
-    
+
 };
+function renderHTML(){
+    fs.writeFileSync(outputPath, render(newEmployee), "utf-8")
+}
 
 
 app();
