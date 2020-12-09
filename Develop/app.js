@@ -1,147 +1,152 @@
-const Manager = require("./lib/Manager");
-const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
-const inquirer = require("inquirer");
-const path = require("path");
-const fs = require("fs");
 
-const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
+const Manager=require("./lib/Manager"),Engineer=require("./lib/Engineer"),Intern=require("./lib/Intern"),inquirer=require("inquirer"),path=require("path"),fs=require("fs"),OUTPUT_DIR=path.resolve(__dirname,"output"),outputPath=path.join(OUTPUT_DIR,"team.html"),render=require("./lib/htmlRenderer"),newEmployee=[];function starter(){inquirer.prompt([{type:"rawlist",message:"Select the position the new employee will occupy:",name:"role",choices:["Manager","Intern","Engineer","Finished"]}]).then(function(a){switch(a.role){case"Manager":manager();break;case"Intern":intern();break;case"Engineer":engineer();break;default:finished();}})}starter();function manager(){inquirer.prompt([{type:"input",message:"What is Manager's name?",name:"name"},{type:"input",message:"Please enter new Manager's ID:",name:"id"},{type:"input",name:"email",message:"Please enter Manager's email:"},{type:"input",message:"What office number is assigned to your Manager?",name:"officeNum"}]).then(function(a){const b=new Manager(a.name,a.id,a.email,a.officeNum);newEmployee.push(b),console.log(newEmployee),starter()})}function intern(){inquirer.prompt([{type:"input",message:"What is your new Intern's name?",name:"name"},{type:"input",message:"Please enter new Intern's ID:",name:"id"},{type:"input",message:"Please enter your Intern's email:",name:"email"},{type:"input",message:"Please enter the School of your Intern:",name:"school"}]).then(function(a){const b=new Intern(a.name,a.id,a.email,a.school);newEmployee.push(b),console.log(newEmployee),starter()})}function engineer(){inquirer.prompt([{type:"input",message:"What is your new Engineer's name?",name:"name"},{type:"input",message:"Please enter new Engineer's ID:",name:"id"},{type:"input",message:"Please enter your Engineer's Email:",name:"email"},{type:"input",message:"Please enter Engineer Github username:",name:"github"}]).then(function(a){const b=new Engineer(a.name,a.id,a.email,a.github);newEmployee.push(b),console.log(newEmployee),starter()})}function finished(){fs.writeFileSync(outputPath,render(newEmployee),"utf-8")}
 
-const render = require("./lib/htmlRenderer");
-// const { type } = require("os");
 
-const newEmployee = [];
 
-// Function that starts and directs the process:
-function starter() {
-    inquirer.prompt([
-        {
-            type: "rawlist",
-            message: "Select the position the new employee will occupy:",
-            name: "role",
-            choices: ["Manager", "Intern", "Engineer",  "Finished"]
-        }
-    ]).then(function (response) {
-        switch(response.role){
-            case "Manager": manager(); break;
-            case "Intern": intern(); break;
-            case "Engineer": engineer(); break;
-            default: finished();
-        }
-    })
-}
-starter();
+// const Manager = require("./lib/Manager");
+// const Engineer = require("./lib/Engineer");
+// const Intern = require("./lib/Intern");
+// const inquirer = require("inquirer");
+// const path = require("path");
+// const fs = require("fs");
 
-// Functions that control questions being asked and pushes information to needed areas.
-function manager() {
-    inquirer.prompt([
-        {
-            type: "input",
-            message: "What is Manager's name?",
-            name: "name"
-            
-        },
-        {
-            type: "input",
-            message: "Please enter new Manager's ID:",
-            name: "id"
-            
-        },
-        {
-            type: "input",
-            name: "email",
-            message: "Please enter Manager's email:"
-        },
-        {
-            type: 'input',
-            message: 'What office number is assigned to your Manager?',
-            name: 'officeNum'
-        }
-    ]).then(function (res) {
-        const manager = new Manager(res.name, res.id,  res.email, res.officeNum);
-        
-        newEmployee.push(manager);
-        console.log(newEmployee);
+// const OUTPUT_DIR = path.resolve(__dirname, "output");
+// const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-        starter();
-    });
-}
+// const render = require("./lib/htmlRenderer");
+// // const { type } = require("os");
 
-function intern() {
-    inquirer.prompt([
-        {
-            type: "input",
-            message: "What is your new Intern's name?",
-            name: "name"
-            
-        },
-        {
-            type: "input",
-            message: "Please enter new Intern's ID:",
-            name: "id"
-            
-        },
-        {
-            type: "input",
-            message: "Please enter your Intern's email:",
-            name: "email"
-            
-        },
-        {
-            type: "input",
-            message: "Please enter the School of your Intern:",
-            name: "school"
-            
-        }
-    ]).then(function (response) {
-        const intern = new Intern(response.name, response.id,  response.email, response.school);
+// const newEmployee = [];
 
-        newEmployee.push(intern);
-        console.log(newEmployee);
-        starter();
-    });
-}
+// // Function that starts and directs the process:
+// function starter() {
+//     inquirer.prompt([
+//         {
+//             type: "rawlist",
+//             message: "Select the position the new employee will occupy:",
+//             name: "role",
+//             choices: ["Manager", "Intern", "Engineer", "Finished"]
+//         }
+//     ]).then(function (response) {
+//         switch (response.role) {
+//             case "Manager": manager(); break;
+//             case "Intern": intern(); break;
+//             case "Engineer": engineer(); break;
+//             default: finished();
+//         }
+//     })
+// }
+// starter();
 
-function engineer() {
-    inquirer.prompt([
-        {
-            type: "input",
-            message: "What is your new Engineer's name?",
-            name: "name"
-            
-        },
-        {
-            type: "input",
-            message: "Please enter new Engineer's ID:",
-            name: "id"
-            
-        },
-        {
-            type: "input",
-            message: "Please enter your Engineer's Email:",
-            name: "email"
-            
-        },
-        {
-            type: "input",
-            message: "Please enter Engineer Github username:",
-            name: "github"
-            
-        }
-    ]).then(function (response) {
-        const engineer = new Engineer(response.name, response.id,  response.email, response.github);
+// // Functions that control questions being asked and pushes information to needed areas.
+// function manager() {
+//     inquirer.prompt([
+//         {
+//             type: "input",
+//             message: "What is Manager's name?",
+//             name: "name"
 
-        newEmployee.push(engineer);
-        console.log(newEmployee);
-        starter();
-    });
-}
+//         },
+//         {
+//             type: "input",
+//             message: "Please enter new Manager's ID:",
+//             name: "id"
 
-// Finishes and writes to generated html:
-function finished(){
-    fs.writeFileSync(outputPath, render(newEmployee), "utf-8")
-}
+//         },
+//         {
+//             type: "input",
+//             name: "email",
+//             message: "Please enter Manager's email:"
+//         },
+//         {
+//             type: 'input',
+//             message: 'What office number is assigned to your Manager?',
+//             name: 'officeNum'
+//         }
+//     ]).then(function (res) {
+//         const manager = new Manager(res.name, res.id, res.email, res.officeNum);
+
+//         newEmployee.push(manager);
+//         console.log(newEmployee);
+
+//         starter();
+//     });
+// }
+
+// function intern() {
+//     inquirer.prompt([
+//         {
+//             type: "input",
+//             message: "What is your new Intern's name?",
+//             name: "name"
+
+//         },
+//         {
+//             type: "input",
+//             message: "Please enter new Intern's ID:",
+//             name: "id"
+
+//         },
+//         {
+//             type: "input",
+//             message: "Please enter your Intern's email:",
+//             name: "email"
+
+//         },
+//         {
+//             type: "input",
+//             message: "Please enter the School of your Intern:",
+//             name: "school"
+
+//         }
+//     ]).then(function (response) {
+//         const intern = new Intern(response.name, response.id, response.email, response.school);
+
+//         newEmployee.push(intern);
+//         console.log(newEmployee);
+//         starter();
+//     });
+// }
+
+// function engineer() {
+//     inquirer.prompt([
+//         {
+//             type: "input",
+//             message: "What is your new Engineer's name?",
+//             name: "name"
+
+//         },
+//         {
+//             type: "input",
+//             message: "Please enter new Engineer's ID:",
+//             name: "id"
+
+//         },
+//         {
+//             type: "input",
+//             message: "Please enter your Engineer's Email:",
+//             name: "email"
+
+//         },
+//         {
+//             type: "input",
+//             message: "Please enter Engineer Github username:",
+//             name: "github"
+
+//         }
+//     ]).then(function (response) {
+//         const engineer = new Engineer(response.name, response.id, response.email, response.github);
+
+//         newEmployee.push(engineer);
+//         console.log(newEmployee);
+//         starter();
+//     });
+// }
+
+// // Finishes and writes to generated html:
+// function finished() {
+//     fs.writeFileSync(outputPath, render(newEmployee), "utf-8")
+// }
 
 
 
@@ -234,7 +239,7 @@ function finished(){
 
 //         },
 
-        
+
 //         {
 //             type: 'input',
 //             message: 'What office number is assigned to your Manager?',
@@ -247,7 +252,7 @@ function finished(){
 //             name: 'github'
 //         },
 
-        
+
 //         {
 //             type: 'confirm',
 //             message: 'Would you like to add a new Employee?',
