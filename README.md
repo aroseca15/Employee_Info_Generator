@@ -28,7 +28,7 @@ Jest
 
 ## Professional Profiles and Email:
 aroseca15
-Not Available at this time.
+
 aroseca15@gmail.com
 
 ## Contact for Questions:
